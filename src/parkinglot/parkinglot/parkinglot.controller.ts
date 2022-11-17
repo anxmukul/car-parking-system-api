@@ -43,9 +43,9 @@ class ReservedSlotResponse {
   color: string;
 }
 
-@Controller('parkinglot')
+@Controller()
 export class ParkinglotController {
-  @Post()
+  @Post('parking_lot')
   createSlots(@Body() reqestedSlot: Noofslotrequest): Slotresponse {
     let ns = slotarrayobj.intiliazeSlot(reqestedSlot.no_of_slot);
     const returnobj: Slotresponse = new Slotresponse();
@@ -53,7 +53,7 @@ export class ParkinglotController {
     return returnobj;
   }
 
-  @Patch()
+  @Patch('parking_lot')
   addSlots(@Body() addnewSlot: Noofslotrequest): Slotresponse {
     let ns = slotarrayobj.addnewSlot(addnewSlot.no_of_slot);
     const returnobj: Slotresponse = new Slotresponse();
