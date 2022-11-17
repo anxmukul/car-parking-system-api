@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  BadRequestException,
+} from '@nestjs/common';
 
 import { slotarrayobj } from './slot.dto';
 
@@ -19,13 +27,14 @@ class allocatedSlot {
   allocated_slot_number: number;
 }
 class badresponse {
-    Error: string;
+  Error: string;
 }
 class FreeSlotResponse {
   freed_slot_number: number;
 }
 class FreeSlotRequest {
   slot_number: number;
+  car_registration_no: string;
 }
 
 class ReservedSlotResponse {
@@ -34,12 +43,6 @@ class ReservedSlotResponse {
   color: string;
 }
 
-// class CarRegNos{
-//     cars: Array<string>
-// }
-// class CarSlotNos{
-//     cars_slot_no: number;
-// }
 @Controller('parkinglot')
 export class ParkinglotController {
   @Post()
@@ -60,19 +63,18 @@ export class ParkinglotController {
   }
 
   @Post('park')
-  park(@Body() newCar: carDetail): allocatedSlot | badresponse{
+  park(@Body() newCar: carDetail): allocatedSlot | badresponse {
     let slotGiven = slotarrayobj.parkCar(newCar.car_reg_no, newCar.car_color);
     console.log('Slots allocated', slotGiven);
     if (slotGiven != 0) {
       const returnobj: allocatedSlot = new allocatedSlot();
       returnobj.allocated_slot_number = slotGiven;
       return returnobj;
+    } else {
+      const returnobj: badresponse = new badresponse();
+      throw new BadRequestException(`Parking lot is full`);
+      return returnobj;
     }
-    else{
-        const returnobj: badresponse = new badresponse();
-        returnobj.Error = "Parking lot is Full!";
-    }
-    
   }
 
   @Get('registration_numbers/:color')
@@ -80,14 +82,6 @@ export class ParkinglotController {
     let car_no = slotarrayobj.findCarByColor(color);
     return car_no;
   }
-
-  //   @Get('registration_numbers/:color')
-  //   findParticularColorCar(@Param('color') color: string): CarRegNos{
-  //     let car_no = slotarrayobj.findCarByColor(color);
-  //     const responsearr: CarRegNos = new CarRegNos();
-  //     responsearr.cars = car_no;
-  //     return responsearr;
-  //   }
 
   @Get('slot_numbers/:color')
   findSlotOfCarByColor(@Param('color') color: string): string[] {
@@ -97,17 +91,27 @@ export class ParkinglotController {
 
   @Post('clear')
   Free(@Body() free_slot_no: FreeSlotRequest): FreeSlotResponse {
-    let freed_slot = slotarrayobj.freeSlot(free_slot_no.slot_number);
-    const returnobj: FreeSlotResponse = new FreeSlotResponse();
-    returnobj.freed_slot_number = freed_slot;
-    return returnobj;
+    console.log(free_slot_no.slot_number, free_slot_no.car_registration_no);
+    if (free_slot_no.car_registration_no == undefined) {
+      let freed_slot = slotarrayobj.freeSlotBySlotNumber(
+        free_slot_no.slot_number,
+      );
+      const returnobj: FreeSlotResponse = new FreeSlotResponse();
+      returnobj.freed_slot_number = freed_slot;
+      return returnobj;
+    } else {
+      let freed_slot = slotarrayobj.freeSlotByRegNumber(
+        free_slot_no.car_registration_no,
+      );
+      const returnobj: FreeSlotResponse = new FreeSlotResponse();
+      returnobj.freed_slot_number = freed_slot;
+      return returnobj;
+    }
   }
 
   @Get('status')
   findReservedSlot(): ReservedSlotResponse[] {
     let reserved_slots_array = slotarrayobj.getReservedSlot();
-    // const reservedSlots: ReservedSlotResponse = new ReservedSlotResponse();
-    // reservedSlots.registration_no = reserved_slots_array.;
     return reserved_slots_array;
   }
 }
