@@ -18,14 +18,17 @@ class carDetail {
 class allocatedSlot {
     allocated_slot_number: number;
 }
-// class freeSlot {
-//     freed_slot_numbe
-// }
+class FreeSlotResponse {
+    freed_slot_number: number;
+}
+class FreeSlotRequest{
+    slot_number: number;
+}
 // class CarRegNos{
 //     cars: Array<string>
 // }
 // class CarSlotNos{
-//     cars_slot_no: Array<number>
+//     cars_slot_no: number;
 // }
 @Controller('parkinglot')
 export class ParkinglotController {
@@ -78,11 +81,11 @@ export class ParkinglotController {
     return car_no;
   }
 
-//   @Post('clear')
-//   Free(@Body() reqestedSlot: Noofslotrequest): Slotresponse {
-//     let ns = slotarrayobj.intiliazeSlot(reqestedSlot.no_of_slot);
-//     const returnobj: Slotresponse = new Slotresponse();
-//     returnobj.total_slot = ns;
-//     return returnobj;
-//   }
+  @Post('clear')
+  Free(@Body() free_slot_no: FreeSlotRequest): FreeSlotResponse {
+    let freed_slot = slotarrayobj.freeSlot(free_slot_no.slot_number);
+    const returnobj: FreeSlotResponse= new FreeSlotResponse();
+    returnobj.freed_slot_number = freed_slot;
+    return returnobj;
+  }
 }

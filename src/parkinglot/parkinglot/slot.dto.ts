@@ -76,6 +76,14 @@ class Slotarray {
     }
     return slot_id;
   }
+
+  public freeSlot(slot_num:number): number{
+    console.log('Slot number to delete', slot_num);
+    this.slots[slot_num].car_reg_no = null;
+    this.slots[slot_num].car_color = null;
+    this.slots[slot_num].status = "unreserved";
+    return slot_num;
+  }
 }
 
 export const slotarrayobj: Slotarray = new Slotarray();
