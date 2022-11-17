@@ -11,7 +11,7 @@ class ReservedSlotResponse {
   color: string;
 }
 
-class Slotarray {
+export class Slotarray {
   slots: SlotDTO[];
   reservedslots: ReservedSlotResponse[];
   public intiliazeSlot(no_of_slot: number): number {
@@ -116,3 +116,6 @@ class Slotarray {
 }
 
 export const slotarrayobj: Slotarray = new Slotarray();
+ 
+
+//  module.exports = [slotarrayobj, Slotarray]
