@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
 
 import { slotarrayobj } from './slot.dto';
 
@@ -10,8 +10,26 @@ class Noofslotrequest {
   no_of_slot: number;
 }
 
+class carDetail {
+    car_reg_no: string;
+    car_color: string;
+}
+
+class allocatedSlot {
+    allocated_slot_number: number;
+}
+// class freeSlot {
+//     freed_slot_numbe
+// }
+// class CarRegNos{
+//     cars: Array<string>
+// }
+// class CarSlotNos{
+//     cars_slot_no: Array<number>
+// }
 @Controller('parkinglot')
 export class ParkinglotController {
+
   @Post()
   createSlots(@Body() reqestedSlot: Noofslotrequest): Slotresponse {
     let ns = slotarrayobj.intiliazeSlot(reqestedSlot.no_of_slot);
@@ -28,4 +46,43 @@ export class ParkinglotController {
     returnobj.total_slot = ns;
     return returnobj;
   }
+
+  @Post('park')
+  park(@Body() newCar: carDetail): allocatedSlot {
+    let slotGiven = slotarrayobj.parkCar(newCar.car_reg_no, newCar.car_color);
+    console.log('Slots allocated', slotGiven);
+    if(slotGiven != 0){
+        const returnobj: allocatedSlot = new allocatedSlot();
+        returnobj.allocated_slot_number = slotGiven;
+        return returnobj;
+    }
+  }
+
+  @Get('registration_numbers/:color')
+  findParticularColorCar(@Param('color') color: string): string[]{
+    let car_no = slotarrayobj.findCarByColor(color);
+    return car_no;
+  }
+
+//   @Get('registration_numbers/:color')
+//   findParticularColorCar(@Param('color') color: string): CarRegNos{
+//     let car_no = slotarrayobj.findCarByColor(color);
+//     const responsearr: CarRegNos = new CarRegNos();
+//     responsearr.cars = car_no;
+//     return responsearr;
+//   }
+
+  @Get('slot_numbers/:color')
+  findSlotOfCarByColor(@Param('color') color: string): string[] {
+    let car_no = slotarrayobj.findSlotOfCarByColor(color);
+    return car_no;
+  }
+
+//   @Post('clear')
+//   Free(@Body() reqestedSlot: Noofslotrequest): Slotresponse {
+//     let ns = slotarrayobj.intiliazeSlot(reqestedSlot.no_of_slot);
+//     const returnobj: Slotresponse = new Slotresponse();
+//     returnobj.total_slot = ns;
+//     return returnobj;
+//   }
 }
