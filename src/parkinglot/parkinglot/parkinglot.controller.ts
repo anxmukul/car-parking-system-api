@@ -14,12 +14,18 @@ class Noofslotrequest {
 export class ParkinglotController {
   @Post()
   createSlots(@Body() reqestedSlot: Noofslotrequest): Slotresponse {
-    // console.log(reqestedSlot);
     let ns = slotarrayobj.intiliazeSlot(reqestedSlot.no_of_slot);
     const returnobj: Slotresponse = new Slotresponse();
-    // console.log(reqestedSlot.no_of_slot, ns);
     returnobj.total_slot = ns;
     return returnobj;
   }
 
+  @Patch()
+  addSlots(@Body() addnewSlot: Noofslotrequest): Slotresponse {
+    let ns = slotarrayobj.addnewSlot(addnewSlot.no_of_slot);
+    const returnobj: Slotresponse = new Slotresponse();
+    console.log(ns);
+    returnobj.total_slot = ns;
+    return returnobj;
+  }
 }
