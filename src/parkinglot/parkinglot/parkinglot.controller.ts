@@ -57,7 +57,6 @@ export class ParkinglotController {
   addSlots(@Body() addnewSlot: Noofslotrequest): Slotresponse {
     let ns = slotarrayobj.addnewSlot(addnewSlot.no_of_slot);
     const returnobj: Slotresponse = new Slotresponse();
-    console.log(ns);
     returnobj.total_slot = ns;
     return returnobj;
   }
@@ -65,7 +64,6 @@ export class ParkinglotController {
   @Post('park')
   park(@Body() newCar: carDetail): allocatedSlot | badresponse {
     let slotGiven = slotarrayobj.parkCar(newCar.car_reg_no, newCar.car_color);
-    console.log('Slots allocated', slotGiven);
     if (slotGiven != 0) {
       const returnobj: allocatedSlot = new allocatedSlot();
       returnobj.allocated_slot_number = slotGiven;
@@ -91,7 +89,6 @@ export class ParkinglotController {
 
   @Post('clear')
   Free(@Body() free_slot_no: FreeSlotRequest): FreeSlotResponse {
-    console.log(free_slot_no.slot_number, free_slot_no.car_registration_no);
     if (free_slot_no.car_registration_no == undefined) {
       let freed_slot = slotarrayobj.freeSlotBySlotNumber(
         free_slot_no.slot_number,

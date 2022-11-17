@@ -105,9 +105,9 @@ export class Slotarray {
     for (let i = 0; i < total_no_slots; i++) {
       if (this.slots[i].status === 'reserved') {
         const temp: ReservedSlotResponse = new ReservedSlotResponse();
-        temp.color = this.slots[i].car_color;
-        temp.registration_no = this.slots[i].car_reg_no;
         temp.slot_no = this.slots[i].id;
+        temp.registration_no = this.slots[i].car_reg_no;       
+        temp.color = this.slots[i].car_color;       
         this.reservedslots.push(temp);
       }
     }
@@ -116,6 +116,4 @@ export class Slotarray {
 }
 
 export const slotarrayobj: Slotarray = new Slotarray();
- 
 
-//  module.exports = [slotarrayobj, Slotarray]
