@@ -3,6 +3,9 @@
 ## Description
 Implementing RESTful APIs for a car parking system.
 
+## Prerequisite
+- Nodejs v16.18.1
+
 ## Installation
 
 ```bash
