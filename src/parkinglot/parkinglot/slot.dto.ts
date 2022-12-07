@@ -88,7 +88,7 @@ export class Slotarray {
   }
 
   public freeSlotByRegNumber(reg_no: string): number {
-    var freed_slot;
+    var freed_slot = -1;
     var total_no_slots = this.slots.length;
     for (let i = 0; i < total_no_slots; i++) {
       if (this.slots[i].car_reg_no === reg_no) {
