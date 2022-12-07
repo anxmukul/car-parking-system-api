@@ -12,6 +12,7 @@ class ReservedSlotResponse {
 }
 
 export class Slotarray {
+  
   slots: SlotDTO[];
   reservedslots: ReservedSlotResponse[];
   public intiliazeSlot(no_of_slot: number): number {
@@ -40,6 +41,7 @@ export class Slotarray {
   public parkCar(reg_no: string, color: string): number {
     var total_no_slots = this.slots.length;
     let allocated_slot;
+
     for (let i = 0; i < total_no_slots; i++) {
       if (this.slots[i].status == 'unreserved') {
         allocated_slot = i + 1;
