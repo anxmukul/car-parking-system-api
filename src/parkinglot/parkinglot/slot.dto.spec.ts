@@ -70,7 +70,7 @@ describe('Slotarray', () => {
       slotarrayobj.intiliazeSlot(1);
       slotarrayobj.parkCar('kk-89-cr-8996', 'white');
       var res = slotarrayobj.findSlotOfCarByColor('white');
-      expect(res[0]).toEqual("1");
+      expect(res[0]).toEqual('1');
     });
     it('should return empty array if no car exits of given color', () => {
       let slotarrayobj: Slotarray = new Slotarray();
@@ -98,7 +98,6 @@ describe('Slotarray', () => {
       var res = slotarrayobj.freeSlotByRegNumber('KA-03-ME-8256');
       expect(res).toEqual(1);
       expect(slotarrayobj.slots[0].status).toBe('unreserved');
-
     });
     it('should return -1 if no car parked of given reg_no', () => {
       let slotarrayobj: Slotarray = new Slotarray();
@@ -123,7 +122,7 @@ describe('Slotarray', () => {
     });
     it('should return empty array if no cars are parked yet', () => {
       let slotarrayobj: Slotarray = new Slotarray();
-      slotarrayobj.intiliazeSlot(1);     
+      slotarrayobj.intiliazeSlot(1);
       var res = slotarrayobj.getReservedSlot();
       expect(res).toEqual([]);
     });

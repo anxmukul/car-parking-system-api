@@ -12,7 +12,6 @@ class ReservedSlotResponse {
 }
 
 export class Slotarray {
-  
   slots: SlotDTO[];
   reservedslots: ReservedSlotResponse[];
   public intiliazeSlot(no_of_slot: number): number {
@@ -108,8 +107,8 @@ export class Slotarray {
       if (this.slots[i].status === 'reserved') {
         const temp: ReservedSlotResponse = new ReservedSlotResponse();
         temp.slot_no = this.slots[i].id;
-        temp.registration_no = this.slots[i].car_reg_no;       
-        temp.color = this.slots[i].car_color;       
+        temp.registration_no = this.slots[i].car_reg_no;
+        temp.color = this.slots[i].car_color;
         this.reservedslots.push(temp);
       }
     }
@@ -118,4 +117,3 @@ export class Slotarray {
 }
 
 export const slotarrayobj: Slotarray = new Slotarray();
-
